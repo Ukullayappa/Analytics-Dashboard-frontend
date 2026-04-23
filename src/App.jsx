@@ -4,6 +4,8 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import Reports from './pages/Reports';
 import Audience from './pages/Audience';
+import Marketing from './pages/Marketing';
+import Documents from './pages/Documents';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/audience" element={<Audience />} />
+          <Route path="/marketing" element={<Marketing />} />
+          <Route path="/documents" element={<Documents />} />
         </Routes>
       </div>
     </Router>
