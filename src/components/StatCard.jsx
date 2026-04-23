@@ -3,7 +3,7 @@ import { TrendingUp, TrendingDown } from 'lucide-react';
 
 const StatCard = ({ label, value, change, trend, color }) => {
   return (
-    <div className="stat-card">
+    <div className="stat-card h-100">
       <div className="d-flex justify-content-between align-items-start mb-3">
         <span className="text-muted fw-medium">{label}</span>
         <div 
