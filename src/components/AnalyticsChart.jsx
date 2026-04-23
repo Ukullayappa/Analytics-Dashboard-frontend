@@ -15,7 +15,7 @@ const AnalyticsChart = ({ data }) => {
         </div>
       </div>
       <div style={{ width: '100%', minWidth: 0 }}>
-        <ResponsiveContainer width="100%" aspect={2.5} minWidth={0}>
+        <ResponsiveContainer width="100%" height={350} aspect={2.5} minWidth={0}>
           <AreaChart
             data={data}
             margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
