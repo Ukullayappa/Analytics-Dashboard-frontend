@@ -1,5 +1,6 @@
 import React from 'react';
-import { LayoutDashboard, BarChart3, Users, Settings, LogOut, PieChart, FileText, ChevronRight } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
+import { LayoutDashboard, BarChart3, Users, Settings, LogOut, PieChart, FileText } from 'lucide-react';
 
 const Sidebar = () => {
   return (
@@ -26,36 +27,36 @@ const Sidebar = () => {
           Menu
         </p>
         <nav>
-          <a href="#" className="nav-link-custom active">
+          <NavLink to="/" className={({ isActive }) => `nav-link-custom ${isActive ? 'active' : ''}`}>
             <LayoutDashboard size={18} />
             <span>Overview</span>
-          </a>
-          <a href="#" className="nav-link-custom">
+          </NavLink>
+          <NavLink to="/reports" className={({ isActive }) => `nav-link-custom ${isActive ? 'active' : ''}`}>
             <BarChart3 size={18} />
             <span>Reports</span>
-          </a>
-          <a href="#" className="nav-link-custom">
+          </NavLink>
+          <NavLink to="/audience" className={({ isActive }) => `nav-link-custom ${isActive ? 'active' : ''}`}>
             <Users size={18} />
             <span>Audience</span>
-          </a>
-          <a href="#" className="nav-link-custom">
+          </NavLink>
+          <NavLink to="/marketing" className="nav-link-custom">
             <PieChart size={18} />
             <span>Marketing</span>
-          </a>
-          <a href="#" className="nav-link-custom">
+          </NavLink>
+          <NavLink to="/documents" className="nav-link-custom">
             <FileText size={18} />
             <span>Documents</span>
-          </a>
+          </NavLink>
         </nav>
 
         <p className="text-uppercase text-muted fw-bold mb-3 mt-5 px-3" style={{ fontSize: '0.65rem', letterSpacing: '1px' }}>
           Support
         </p>
         <nav>
-          <a href="#" className="nav-link-custom">
+          <NavLink to="/settings" className="nav-link-custom">
             <Settings size={18} />
             <span>Settings</span>
-          </a>
+          </NavLink>
         </nav>
       </div>
 
