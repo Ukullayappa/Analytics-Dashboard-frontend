@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 import { Users, UserCheck, UserPlus, Zap } from 'lucide-react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 
 const pieData = [
   { name: 'Mobile', value: 400 },
@@ -11,13 +11,29 @@ const pieData = [
 const COLORS = ['#2563eb', '#10b981', '#f59e0b'];
 
 const Audience = () => {
-  const [isMounted, setIsMounted] = useState(false);
+  const containerRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 250 });
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsMounted(true);
-    }, 100);
-    return () => clearTimeout(timer);
+    const observeTarget = containerRef.current;
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (entries[0].contentRect.width > 0) {
+        setDimensions({
+          width: entries[0].contentRect.width,
+          height: 250
+        });
+      }
+    });
+
+    if (observeTarget) {
+      resizeObserver.observe(observeTarget);
+    }
+
+    return () => {
+      if (observeTarget) {
+        resizeObserver.unobserve(observeTarget);
+      }
+    };
   }, []);
 
   return (
@@ -54,24 +70,24 @@ const Audience = () => {
         <Col lg={4}>
           <div className="chart-container">
             <h5 className="fw-bold mb-4">Device Breakdown</h5>
-            <div className="w-100" style={{ height: 250, minHeight: 250, position: 'relative' }}>
-              {isMounted && (
-                <ResponsiveContainer width="100%" height="100%" minHeight={250}>
-                  <PieChart>
-                    <Pie
-                      data={pieData}
-                      innerRadius={60}
-                      outerRadius={80}
-                      paddingAngle={5}
-                      dataKey="value"
-                    >
-                      {pieData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
+            <div ref={containerRef} style={{ width: '100%', height: 250 }}>
+              {dimensions.width > 0 && (
+                <PieChart width={dimensions.width} height={dimensions.height}>
+                  <Pie
+                    data={pieData}
+                    innerRadius={60}
+                    outerRadius={80}
+                    paddingAngle={5}
+                    dataKey="value"
+                    cx={dimensions.width / 2}
+                    cy={dimensions.height / 2}
+                  >
+                    {pieData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
               )}
             </div>
             <div className="d-flex justify-content-center gap-3 mt-3">

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Row, Col, Table, Badge } from 'react-bootstrap';
 import { FileText, Download, Filter, Calendar } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
 const data = [
   { name: 'Sales Q1', value: 400 },
@@ -12,13 +12,29 @@ const data = [
 ];
 
 const Reports = () => {
-  const [isMounted, setIsMounted] = useState(false);
+  const containerRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 300 });
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsMounted(true);
-    }, 100);
-    return () => clearTimeout(timer);
+    const observeTarget = containerRef.current;
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (entries[0].contentRect.width > 0) {
+        setDimensions({
+          width: entries[0].contentRect.width,
+          height: 300
+        });
+      }
+    });
+
+    if (observeTarget) {
+      resizeObserver.observe(observeTarget);
+    }
+
+    return () => {
+      if (observeTarget) {
+        resizeObserver.unobserve(observeTarget);
+      }
+    };
   }, []);
 
   return (
@@ -47,17 +63,15 @@ const Reports = () => {
                 <button className="btn btn-sm btn-light border"><Filter size={14} /></button>
               </div>
             </div>
-            <div className="w-100" style={{ height: 300, minHeight: 300, position: 'relative' }}>
-              {isMounted && (
-                <ResponsiveContainer width="100%" height="100%" minHeight={300}>
-                  <BarChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
-                    <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
-                    <Tooltip cursor={{fill: '#f8fafc'}} contentStyle={{ borderRadius: '10px', border: 'none', boxShadow: 'var(--shadow)' }} />
-                    <Bar dataKey="value" fill="#2563eb" radius={[4, 4, 0, 0]} barSize={40} />
-                  </BarChart>
-                </ResponsiveContainer>
+            <div ref={containerRef} style={{ width: '100%', height: 300 }}>
+              {dimensions.width > 0 && (
+                <BarChart width={dimensions.width} height={dimensions.height} data={data}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
+                  <Tooltip cursor={{fill: '#f8fafc'}} contentStyle={{ borderRadius: '10px', border: 'none', boxShadow: 'var(--shadow)' }} />
+                  <Bar dataKey="value" fill="#2563eb" radius={[4, 4, 0, 0]} barSize={40} />
+                </BarChart>
               )}
             </div>
           </div>

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Row, Col, Card, ProgressBar } from 'react-bootstrap';
 import { Target, TrendingUp, MousePointer2, Share2, DollarSign } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
 const data = [
   { name: 'Mon', spend: 400, conv: 240 },
@@ -14,13 +14,29 @@ const data = [
 ];
 
 const Marketing = () => {
-  const [isMounted, setIsMounted] = useState(false);
+  const containerRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 300 });
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsMounted(true);
-    }, 100);
-    return () => clearTimeout(timer);
+    const observeTarget = containerRef.current;
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (entries[0].contentRect.width > 0) {
+        setDimensions({
+          width: entries[0].contentRect.width,
+          height: 300
+        });
+      }
+    });
+
+    if (observeTarget) {
+      resizeObserver.observe(observeTarget);
+    }
+
+    return () => {
+      if (observeTarget) {
+        resizeObserver.unobserve(observeTarget);
+      }
+    };
   }, []);
 
   return (
@@ -54,18 +70,16 @@ const Marketing = () => {
 
       <div className="chart-container mb-5">
         <h5 className="fw-bold mb-4">Spend vs Conversions</h5>
-        <div className="w-100" style={{ height: 300, minHeight: 300, position: 'relative' }}>
-          {isMounted && (
-            <ResponsiveContainer width="100%" height="100%" minHeight={300}>
-              <LineChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
-                <Tooltip contentStyle={{ borderRadius: '10px', border: 'none', boxShadow: 'var(--shadow)' }} />
-                <Line type="monotone" dataKey="spend" stroke="#2563eb" strokeWidth={3} dot={{ r: 4 }} />
-                <Line type="monotone" dataKey="conv" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} />
-              </LineChart>
-            </ResponsiveContainer>
+        <div ref={containerRef} style={{ width: '100%', height: 300 }}>
+          {dimensions.width > 0 && (
+            <LineChart width={dimensions.width} height={dimensions.height} data={data}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
+              <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
+              <Tooltip contentStyle={{ borderRadius: '10px', border: 'none', boxShadow: 'var(--shadow)' }} />
+              <Line type="monotone" dataKey="spend" stroke="#2563eb" strokeWidth={3} dot={{ r: 4 }} />
+              <Line type="monotone" dataKey="conv" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} />
+            </LineChart>
           )}
         </div>
       </div>

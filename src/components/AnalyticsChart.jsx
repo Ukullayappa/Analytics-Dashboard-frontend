@@ -1,19 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import React, { useState, useEffect, useRef } from 'react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
 const AnalyticsChart = ({ data }) => {
-  const [isMounted, setIsMounted] = useState(false);
+  const containerRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 350 });
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsMounted(true);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
+    const observeTarget = containerRef.current;
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (entries[0].contentRect.width > 0) {
+        setDimensions({
+          width: entries[0].contentRect.width,
+          height: 350
+        });
+      }
+    });
 
-  if (!isMounted) {
-    return <div style={{ height: 350 }}></div>;
-  }
+    if (observeTarget) {
+      resizeObserver.observe(observeTarget);
+    }
+
+    return () => {
+      if (observeTarget) {
+        resizeObserver.unobserve(observeTarget);
+      }
+    };
+  }, []);
 
   return (
     <div className="chart-container">
@@ -27,9 +39,11 @@ const AnalyticsChart = ({ data }) => {
           <button className="btn btn-sm btn-primary px-3 fw-medium small">Monthly</button>
         </div>
       </div>
-      <div className="w-100" style={{ height: 350, minHeight: 350, position: 'relative' }}>
-        <ResponsiveContainer width="100%" height="100%" minHeight={350}>
+      <div ref={containerRef} style={{ width: '100%', height: 350 }}>
+        {dimensions.width > 0 && (
           <AreaChart
+            width={dimensions.width}
+            height={dimensions.height}
             data={data}
             margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
           >
@@ -70,10 +84,9 @@ const AnalyticsChart = ({ data }) => {
               fillOpacity={1} 
               fill="url(#colorValue)" 
               animationDuration={400}
-              animationBegin={0}
             />
           </AreaChart>
-        </ResponsiveContainer>
+        )}
       </div>
     </div>
   );
