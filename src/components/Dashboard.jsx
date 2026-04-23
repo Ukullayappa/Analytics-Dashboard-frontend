@@ -63,7 +63,9 @@ const Dashboard = () => {
         <div className="d-flex align-items-center gap-2">
           <button className="btn btn-light border d-flex align-items-center gap-2 px-3 rounded-3 shadow-sm">
             <Calendar size={16} />
-            <span className="small fw-semibold">Jan 01 - Dec 31</span>
+            <span className="small fw-semibold">
+              {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
           </button>
           <button className="btn btn-primary d-flex align-items-center gap-2 px-3 rounded-3 shadow-sm">
             <Download size={16} />
