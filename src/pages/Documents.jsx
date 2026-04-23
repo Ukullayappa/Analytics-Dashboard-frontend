@@ -23,7 +23,12 @@ const Documents = () => {
             <InputGroup.Text className="bg-white border-end-0"><Search size={16} className="text-muted" /></InputGroup.Text>
             <Form.Control placeholder="Search documents..." className="border-start-0 ps-0" style={{ width: '250px' }} />
           </InputGroup>
-          <button className="btn btn-primary px-4 rounded-3 fw-semibold">Upload</button>
+          <button 
+            className="btn btn-primary px-4 rounded-3 fw-semibold"
+            onClick={() => alert('Opening file uploader...')}
+          >
+            Upload
+          </button>
         </div>
       </header>
 

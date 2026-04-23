@@ -6,6 +6,7 @@ import Reports from './pages/Reports';
 import Audience from './pages/Audience';
 import Marketing from './pages/Marketing';
 import Documents from './pages/Documents';
+import Settings from './pages/Settings';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/audience" element={<Audience />} />
           <Route path="/marketing" element={<Marketing />} />
           <Route path="/documents" element={<Documents />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
     </Router>

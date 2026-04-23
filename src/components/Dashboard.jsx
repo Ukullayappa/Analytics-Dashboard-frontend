@@ -67,7 +67,10 @@ const Dashboard = () => {
               {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </span>
           </button>
-          <button className="btn btn-primary d-flex align-items-center gap-2 px-3 rounded-3 shadow-sm">
+          <button 
+            className="btn btn-primary d-flex align-items-center gap-2 px-3 rounded-3 shadow-sm"
+            onClick={() => alert('Exporting dashboard data to PDF...')}
+          >
             <Download size={16} />
             <span className="small fw-semibold">Export Report</span>
           </button>

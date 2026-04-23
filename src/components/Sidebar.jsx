@@ -3,6 +3,13 @@ import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, BarChart3, Users, Settings, LogOut, PieChart, FileText } from 'lucide-react';
 
 const Sidebar = () => {
+  const handleSignOut = (e) => {
+    e.preventDefault();
+    if (window.confirm("Are you sure you want to sign out?")) {
+      window.location.href = "/";
+    }
+  };
+
   return (
     <div className="sidebar">
       {/* Brand Logo */}
@@ -39,11 +46,11 @@ const Sidebar = () => {
             <Users size={18} />
             <span>Audience</span>
           </NavLink>
-          <NavLink to="/marketing" className="nav-link-custom">
+          <NavLink to="/marketing" className={({ isActive }) => `nav-link-custom ${isActive ? 'active' : ''}`}>
             <PieChart size={18} />
             <span>Marketing</span>
           </NavLink>
-          <NavLink to="/documents" className="nav-link-custom">
+          <NavLink to="/documents" className={({ isActive }) => `nav-link-custom ${isActive ? 'active' : ''}`}>
             <FileText size={18} />
             <span>Documents</span>
           </NavLink>
@@ -53,7 +60,7 @@ const Sidebar = () => {
           Support
         </p>
         <nav>
-          <NavLink to="/settings" className="nav-link-custom">
+          <NavLink to="/settings" className={({ isActive }) => `nav-link-custom ${isActive ? 'active' : ''}`}>
             <Settings size={18} />
             <span>Settings</span>
           </NavLink>
@@ -62,7 +69,7 @@ const Sidebar = () => {
 
       {/* Footer / User Area */}
       <div className="mt-auto pt-4 border-top">
-        <a href="#" className="nav-link-custom text-danger">
+        <a href="#" className="nav-link-custom text-danger" onClick={handleSignOut}>
           <LogOut size={18} />
           <span>Sign Out</span>
         </a>

@@ -19,7 +19,10 @@ const Reports = () => {
           <h2 className="fw-bold mb-1">Analytical Reports</h2>
           <p className="text-muted mb-0 small">Manage and generate your business intelligence reports.</p>
         </div>
-        <button className="btn btn-primary d-flex align-items-center gap-2 px-3 rounded-3 shadow-sm">
+        <button 
+          className="btn btn-primary d-flex align-items-center gap-2 px-3 rounded-3 shadow-sm"
+          onClick={() => alert('Opening report generator...')}
+        >
           <FileText size={18} />
           <span className="small fw-semibold">Generate New Report</span>
         </button>
