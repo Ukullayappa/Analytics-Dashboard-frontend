@@ -14,8 +14,8 @@ const AnalyticsChart = ({ data }) => {
           <button className="btn btn-sm btn-primary px-3 fw-medium small">Monthly</button>
         </div>
       </div>
-      <div style={{ width: '100%', height: 350, minHeight: 350 }}>
-        <ResponsiveContainer width="100%" height="100%" minWidth={0} debounce={50}>
+      <div style={{ width: '100%', minWidth: 0 }}>
+        <ResponsiveContainer width="100%" aspect={2.5} minWidth={0}>
           <AreaChart
             data={data}
             margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
