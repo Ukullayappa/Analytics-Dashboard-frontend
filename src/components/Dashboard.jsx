@@ -6,7 +6,7 @@ import StatCard from './StatCard';
 import AnalyticsChart from './AnalyticsChart';
 import RecentActivity from './RecentActivity';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const Dashboard = () => {
   const [stats, setStats] = useState([]);
