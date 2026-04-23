@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const AnalyticsChart = ({ data }) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <div style={{ height: 350 }}></div>;
+  }
+
   return (
     <div className="chart-container">
       <div className="d-flex justify-content-between align-items-center mb-5">
@@ -15,7 +25,7 @@ const AnalyticsChart = ({ data }) => {
         </div>
       </div>
       <div className="w-100" style={{ height: 350, minHeight: 350, position: 'relative' }}>
-        <ResponsiveContainer width="100%" height="100%" debounce={1} minHeight={350}>
+        <ResponsiveContainer width="100%" height="100%" minHeight={350}>
           <AreaChart
             data={data}
             margin={{ top: 10, right: 10, left: -20, bottom: 0 }}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, ProgressBar } from 'react-bootstrap';
 import { Target, TrendingUp, MousePointer2, Share2, DollarSign } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -14,6 +14,12 @@ const data = [
 ];
 
 const Marketing = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <div className="main-content animate-fade-in">
       <header className="mb-5">
@@ -46,16 +52,18 @@ const Marketing = () => {
       <div className="chart-container mb-5">
         <h5 className="fw-bold mb-4">Spend vs Conversions</h5>
         <div className="w-100" style={{ height: 300, minHeight: 300, position: 'relative' }}>
-          <ResponsiveContainer width="100%" height="100%" debounce={1} minHeight={300}>
-            <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
-              <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
-              <Tooltip contentStyle={{ borderRadius: '10px', border: 'none', boxShadow: 'var(--shadow)' }} />
-              <Line type="monotone" dataKey="spend" stroke="#2563eb" strokeWidth={3} dot={{ r: 4 }} />
-              <Line type="monotone" dataKey="conv" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} />
-            </LineChart>
-          </ResponsiveContainer>
+          {isMounted && (
+            <ResponsiveContainer width="100%" height="100%" minHeight={300}>
+              <LineChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
+                <Tooltip contentStyle={{ borderRadius: '10px', border: 'none', boxShadow: 'var(--shadow)' }} />
+                <Line type="monotone" dataKey="spend" stroke="#2563eb" strokeWidth={3} dot={{ r: 4 }} />
+                <Line type="monotone" dataKey="conv" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          )}
         </div>
       </div>
 

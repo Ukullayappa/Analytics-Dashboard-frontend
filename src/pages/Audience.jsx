@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 import { Users, UserCheck, UserPlus, Zap } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
@@ -11,6 +11,12 @@ const pieData = [
 const COLORS = ['#2563eb', '#10b981', '#f59e0b'];
 
 const Audience = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <div className="main-content animate-fade-in">
       <header className="mb-5">
@@ -46,22 +52,24 @@ const Audience = () => {
           <div className="chart-container">
             <h5 className="fw-bold mb-4">Device Breakdown</h5>
             <div className="w-100" style={{ height: 250, minHeight: 250, position: 'relative' }}>
-              <ResponsiveContainer width="100%" height="100%" debounce={1} minHeight={250}>
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    innerRadius={60}
-                    outerRadius={80}
-                    paddingAngle={5}
-                    dataKey="value"
-                  >
-                    {pieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
+              {isMounted && (
+                <ResponsiveContainer width="100%" height="100%" minHeight={250}>
+                  <PieChart>
+                    <Pie
+                      data={pieData}
+                      innerRadius={60}
+                      outerRadius={80}
+                      paddingAngle={5}
+                      dataKey="value"
+                    >
+                      {pieData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
+              )}
             </div>
             <div className="d-flex justify-content-center gap-3 mt-3">
               {pieData.map((item, i) => (
