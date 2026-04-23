@@ -38,8 +38,8 @@ const Reports = () => {
                 <button className="btn btn-sm btn-light border"><Filter size={14} /></button>
               </div>
             </div>
-            <div style={{ width: '100%', minWidth: 0 }}>
-              <ResponsiveContainer width="100%" height={300} aspect={2.5} minWidth={0}>
+            <div className="w-100" style={{ height: 300, minHeight: 300, position: 'relative' }}>
+              <ResponsiveContainer width="100%" height="100%" debounce={1} minHeight={300}>
                 <BarChart data={data}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                   <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />

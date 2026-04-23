@@ -45,8 +45,8 @@ const Audience = () => {
         <Col lg={4}>
           <div className="chart-container">
             <h5 className="fw-bold mb-4">Device Breakdown</h5>
-            <div style={{ width: '100%', minWidth: 0 }}>
-              <ResponsiveContainer width="100%" height={250} aspect={1.2} minWidth={0}>
+            <div className="w-100" style={{ height: 250, minHeight: 250, position: 'relative' }}>
+              <ResponsiveContainer width="100%" height="100%" debounce={1} minHeight={250}>
                 <PieChart>
                   <Pie
                     data={pieData}

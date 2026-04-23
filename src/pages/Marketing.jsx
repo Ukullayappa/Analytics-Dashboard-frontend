@@ -45,8 +45,8 @@ const Marketing = () => {
 
       <div className="chart-container mb-5">
         <h5 className="fw-bold mb-4">Spend vs Conversions</h5>
-        <div style={{ width: '100%', minWidth: 0 }}>
-          <ResponsiveContainer width="100%" height={300} aspect={3} minWidth={0}>
+        <div className="w-100" style={{ height: 300, minHeight: 300, position: 'relative' }}>
+          <ResponsiveContainer width="100%" height="100%" debounce={1} minHeight={300}>
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
               <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
