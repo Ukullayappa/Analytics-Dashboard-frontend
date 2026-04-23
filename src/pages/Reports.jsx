@@ -39,7 +39,7 @@ const Reports = () => {
 
   return (
     <div className="main-content animate-fade-in">
-      <header className="d-flex justify-content-between align-items-center mb-5">
+      <header className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
         <div>
           <h2 className="fw-bold mb-1">Analytical Reports</h2>
           <p className="text-muted mb-0 small">Manage and generate your business intelligence reports.</p>

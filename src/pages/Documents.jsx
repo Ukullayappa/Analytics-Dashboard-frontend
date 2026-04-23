@@ -13,18 +13,18 @@ const Documents = () => {
 
   return (
     <div className="main-content animate-fade-in">
-      <header className="d-flex justify-content-between align-items-center mb-5">
+      <header className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
         <div>
           <h2 className="fw-bold mb-1">Document Manager</h2>
           <p className="text-muted small">Access and manage all your project documents in one place.</p>
         </div>
-        <div className="d-flex gap-2">
-          <InputGroup className="shadow-sm">
+        <div className="d-flex flex-column flex-sm-row gap-2 w-100 w-md-auto" style={{ maxWidth: '100%' }}>
+          <InputGroup className="shadow-sm flex-grow-1">
             <InputGroup.Text className="bg-white border-end-0"><Search size={16} className="text-muted" /></InputGroup.Text>
-            <Form.Control placeholder="Search documents..." className="border-start-0 ps-0" style={{ width: '250px' }} />
+            <Form.Control placeholder="Search documents..." className="border-start-0 ps-0" />
           </InputGroup>
           <button 
-            className="btn btn-primary px-4 rounded-3 fw-semibold"
+            className="btn btn-primary px-4 rounded-3 fw-semibold text-nowrap"
             onClick={() => alert('Opening file uploader...')}
           >
             Upload
